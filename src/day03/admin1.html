@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+<script src="jquery-2.1.4.min_ui.js"></script>
+
+</head>
+<style>
+body, img, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, p, form, div,
+	input, textarea, span {
+	margin: 0;
+	padding: 0;
+	font-family: "微软雅黑", "Arial";
+}
+
+input {
+	outline: none;
+}
+
+ul, li {
+	list-style-type: none;
+}
+
+img {
+	border: medium none;
+}
+
+#content {
+	width: 100%;
+	max-width: 1920px;
+	min-width: 1366px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+}
+
+#content>header {
+	padding: 20px;
+	background: #007fff;
+	color: #fff;
+}
+
+#content>section {
+	height: calc(100% - 122px);
+}
+
+#content>section>nav {
+	width: 200px;
+	height: 100%;
+	padding: 10px;
+	vertical-align: top;
+	overflow-x: hidden;
+	transition: width 0.2s;
+	border-right: 1px solid #e2e2e2;
+}
+
+#content>section>nav li {
+	margin: 10px 0;
+}
+
+#content>section>nav dl {
+	display: none;
+}
+
+#content>section>div {
+	width: calc(100% - 230px);
+	height: 100%;
+	vertical-align: top;
+}
+
+#content>footer {
+	display: block;
+	padding: 20px;
+	text-align: center;
+	background: #F6F6F6;
+	color: black;
+}
+
+
+.inlineblock {
+	display: inline-block;
+}
+
+.p_20 {
+	padding: 20px;
+}
+
+.p_l_20 {
+	padding-left: 20px;
+}
+</style>
+<body>
+	<div id="content">
+		<header>
+			<img src="Capgemini.gif">
+		</header>
+		<section>
+			<nav type="0" class="inlineblock allNav">
+				<div align="center">
+					<button>Search</button>
+					<br> <br>
+					<button>.......</button>
+					<br> <br>
+					<button id="add2">add</button>
+
+					<br> <br>
+					<button>.......</button>
+					<br> <br>
+					<button>.......</button>
+					<br> <br>
+					<button>.......</button>
+					<br> <br>
+
+				</div>
+			</nav>
+			<div class="inlineblock">
+				<div target="name" class="showData"></div>
+				<div target="job" class="showData"></div>
+				<div target="address" class="showData"></div>
+				<div target="overview" class="showData"></div>
+
+				<div target="language" class="showData"></div>
+				<div target="technical" class="showData"></div>
+				<div target="project" class="showData"></div>
+				<div target="education" class="showData"></div>
+
+
+				<div id="data1">
+					Search information<span></span>
+				</div>
+
+				<input class="searchInput" target="name" type="text" width="10px"> <input
+					class="searchInput" target="job" type="text"> <input
+					class="searchInput" target="address" type="text"> <input
+					class="searchInput" target="overview" type="text"> <input
+					class="searchInput" target="language" type="text"> <input
+					class="searchInput" target="technical" type="text"> <input
+					class="searchInput" target="project" type="text"> <input
+					class="searchInput" target="education" type="text">
+
+				<button class="allsearch">Search</button>
+				<button class="allsearch">Save</button>
+
+				<table>
+					<thead>
+						<tr>
+							<th>name</th>
+							<th>job</th>
+							<th>address</th>
+							<th>overview</th>
+							<th>language</th>
+							<th>technical</th>
+							<th>project</th>
+							<th>education</th>
+							<th>Operation</th>
+						</tr>
+					</thead>
+					<tbody id="showPlace">
+
+					</tbody>
+				</table>
+
+				<div>
+					<ul id="type2">
+
+					</ul>
+				</div>
+			</div>
+		</section>
+		<footer> @copyright 2018 版权归XXX所有</footer>
+	</div>
+</body>
+<script src="jquery-2.1.4.min_ui.js"></script>
+<script>
+
+    const data = [
+    ]
+
+
+
+    function checkName(name){
+        if( name == '1') {
+            return '这个人的名字是1'
+        } else{
+            return name
+        }
+    }
+
+    // dom查询
+    // parent() 父级
+    //parents() 往上所有的父级
+    //siblings() 所有的平级
+    //children() 子级 （往下一级）
+    //find() 往下找所有的子级
+    //next() 下一个
+    //nextAll() 下面所有个
+    //prev() 前一个
+    //prevAll() 前面所有个
+    //attr()取dom元素的标签值
+    $(".allNav").dblclick(function () {
+        const type = $(this).attr('type');
+        if (type == 0) {
+            $(this).css('width',"10px")
+            $(this).attr('type','1');
+        } else{
+            $(this).css('width',"200px")
+            $(this).attr('type','0');
+        }
+
+    })
+    $(".allNav li a").click(function(){
+        const type = $(this).attr('type');
+        if (type == 0) {
+            $(this).siblings('dl').slideDown(200);
+            $(this).attr('type','1');
+        } else{
+            $(this).siblings('dl').slideUp(200);
+            $(this).attr('type','0');
+        }
+        // $(this).children('dl').show()
+    })
+
+
+    // var html = "<span>的家啊是考虑的哈萨克汇大厦</span>"
+    // console.log($("#data1").html())
+    // console.log($("#data1").text())
+    // // $("#data1").html(html);
+    // // $("#data1").text(html);
+    //操作
+    //show() 显示 == display block || display inline-block
+    //hide() 隐藏 == display none
+    //html() 取值 取包含html标签的所有值  赋值 会把你的html标签转化成标签赋值进去
+    //text()取值 只取纯文本 不包含html 赋值 直接当成文本赋值
+
+
+
+
+    const data2 = {
+        name:'San Zhang',
+        job:'assistant',
+        address:'ShangHai',
+        overview:'positive role',
+        language:'english',
+        technical:'JAVA',
+        project:'1',
+        education:'Master'
+        
+    }
+    // setData(data2)
+    function setData(data) {
+        $(".searchInput").each(function () {
+            $(this).val(data[$(this).attr('target')])
+        })
+    }
+
+
+    $(".allsearch").click(function () {
+        var data2 = getVal()
+        data[commonIndex] = data2
+        setList(data)
+    })
+    function getVal() {
+        var date = {};
+        $(".searchInput").each(function () {
+            date[$(this).attr('target')]  = $(this).val();
+        })
+        return date
+    }
+    $(document).on('input','.searchInput',function () {
+        var data2 = getVal()
+        data[commonIndex] = data2
+        setList(data)
+    })
+
+
+
+
+
+
+
+
+
+
+    var newList = [];
+
+
+    setList(data)
+    function setList(list) {
+        var html = '';
+        list.map(function (object,index) {
+            html += '<tr>';
+            html += '<td>'+checkName(object.name)+'</td>';
+            html += '<td>'+object.job+'</td>';
+            html += '<td>'+object.address+'</td>';
+            html += '<td>'+object.overview+'</td>';
+            html += '<td>'+object.language+'</td>';
+            html += '<td>'+object.technical+'</td>';
+            html += '<td>'+object.project+'</td>';
+            html += '<td>'+object.education+'</td>';
+            html += '<td  index="'+index+'"><button class="editList">编辑</button><button class="delList">删除</button></td>';
+            html += '</tr>';
+        })
+        $("#showPlace").html(html)
+    }
+    
+   
+    
+    
+    var index = 0
+    $("#add").click(function () {
+        index++
+        var html = '<li>' + index+'<a class="deleteLi">删除</a><input type="text"><span>dashdjkhaskj</span><a class="inset">插入</a></li>'
+        $("#type2").append(html);
+    })
+    $(document).on('click','.deleteLi',function () {
+        $(this).parent().remove()
+    })
+    $(document).on('click','.inset',function () {
+        var html = '<li><a class="deleteLi">删除</a><input type="text"><span>dashdjkhaskj</span><a class="inset">插入</a></li>'
+        $(this).parent().next().after(html);
+    })
+
+    
+    
+    $("#add2").click(function () {
+        var dto = {
+            	  name:'San Zhang',
+                  job:'assistant',
+                  address:'ShangHai',
+                  overview:'positive role',
+                  language:'english',
+                  technical:'JAVA',
+                  project:'1',
+                  education:'Master'
+        }
+        data.push(dto)
+        setList(data)
+    })
+    var commonIndex
+    $(document).on('click','.editList',function () {
+        commonIndex = $(this).parent().attr('index')
+        setData(data[index])
+    })
+    $(document).on('click','.delList',function () {
+        var index = $(this).parent().attr('index')
+        data.splice(index, 1)
+        setList(data)
+    })
+
+
+
+
+
+
+
+ 
+
+    $.ajax({
+        type:'get',
+        url:"demo_test.txt",
+        data:{},
+        async:false,
+        timeout:20000,
+        cache:false,
+        beforeSend:{
+
+        },
+        contentType:'application/json',
+        success:function(result){
+            
+        },
+        error:function (error) {
+            
+        }
+    });
+</script>
+</html>
